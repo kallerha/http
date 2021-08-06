@@ -35,6 +35,19 @@ class PathService
         return $this->routeNamesCache;
     }
 
+    public function isCurrentPathByName(string $name, array $parameters = []): bool
+    {
+        $isHttps = (filter_input(INPUT_SERVER, 'HTTPS', FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE)
+            || filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_NUMBER_INT) == 443);
+        $currentUrl = ($isHttps ? 'https' : 'http') . '://' . filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_STRING) . filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
+
+        if ($path = $this->getPathByName($name, $parameters)) {
+            return $path === $currentUrl;
+        }
+
+        return false;
+    }
+
     /**
      * @param string $name
      * @param array $parameters
