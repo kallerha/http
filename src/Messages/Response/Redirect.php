@@ -7,9 +7,19 @@ namespace FluencePrototype\Http\Messages\Response;
 use FluencePrototype\Http\Messages\iResponse;
 use FluencePrototype\Http\PathService;
 
+/**
+ * Class Redirect
+ * @package FluencePrototype\Http\Messages\Response
+ */
 class Redirect implements iResponse
 {
 
+    /**
+     * Redirect constructor.
+     * @param string $to
+     * @param int $statusCode
+     * @param array $parameters
+     */
     public function __construct(
         private string $to,
         private int $statusCode,
