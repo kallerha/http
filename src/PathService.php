@@ -35,6 +35,11 @@ class PathService
         return $this->routeNamesCache;
     }
 
+    /**
+     * @param string $name
+     * @param array $parameters
+     * @return bool
+     */
     public function isCurrentPathByName(string $name, array $parameters = []): bool
     {
         $isHttps = (filter_input(INPUT_SERVER, 'HTTPS', FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE)
@@ -72,6 +77,15 @@ class PathService
         }
 
         return null;
+    }
+
+    /**
+     * @param string $subdomain
+     * @return string
+     */
+    public function getHostWithSubdomain(string $subdomain): string
+    {
+        return $_ENV['SCHEME'] . '://' . $subdomain . '.' . $_ENV['HOST'];
     }
 
 }
