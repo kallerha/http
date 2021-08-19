@@ -81,7 +81,7 @@ class PathService
      */
     public function isCurrentPathByName(string $name, array $parameters = []): bool
     {
-        $currentUrl = $this->getCurrentUrl();
+        $currentUrl = $this->getCurrentUrlWithoutQueryAndFragment();
 
         if ($path = $this->getPathByName($name, $parameters)) {
             return $path === $currentUrl;
