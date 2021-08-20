@@ -67,7 +67,7 @@ class Request implements iRequest
             return $ip;
         }
 
-        if ($ip = filter_input(INPUT_SERVER, 'HTTP_CLIENT_IP', FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($ip = filter_input(INPUT_SERVER, 'HTTP_CLIENT_IP', FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
             return $ip;
         }
 
@@ -91,11 +91,11 @@ class Request implements iRequest
             return $ip;
         }
 
-        if ($ip = filter_input(INPUT_SERVER, 'HTTP_X_REAL_IP', FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($ip = filter_input(INPUT_SERVER, 'HTTP_X_REAL_IP', FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
             return $ip;
         }
 
-        if ($ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
             return $ip;
         }
 
