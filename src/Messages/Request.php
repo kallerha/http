@@ -102,4 +102,12 @@ class Request implements iRequest
         return null;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getUserAgent(): string
+    {
+        return trim(filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE));
+    }
+
 }

@@ -36,4 +36,9 @@ interface iRequest
      */
     public function getIp(): ?string;
 
+    /**
+     * @return string
+     */
+    public function getUserAgent(): string;
+
 }
