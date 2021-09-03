@@ -42,9 +42,13 @@ class FormService
         return null;
     }
 
+    /**
+     * @param string $name
+     * @return string|null
+     */
     public function getName(string $name): ?string
     {
-        if ($string = $this->getString()) {
+        if ($string = $this->getString($name)) {
             return preg_replace('/\s+/', ' ', $string);
         }
 
