@@ -36,10 +36,9 @@ class Json implements iResponse
     {
         try {
             header('Content-Type: application/json; charset=utf-8');
-
             http_response_code(response_code: $this->responseCode);
 
-            str_replace('\t', ' ', json_encode($this->data,
+            echo str_replace('\t', ' ', json_encode($this->data,
                 JSON_INVALID_UTF8_SUBSTITUTE |
                 JSON_PARTIAL_OUTPUT_ON_ERROR |
                 JSON_PRESERVE_ZERO_FRACTION |
