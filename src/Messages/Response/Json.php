@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace FluencePrototype\Http\Messages\Response;
 
-use FluencePrototype\Filesystem\DirectoryNotFoundException;
-use FluencePrototype\Filesystem\Filesystem;
-use FluencePrototype\Filesystem\InvalidDirectoryPathException;
 use FluencePrototype\Http\Messages\iResponse;
 use JsonException;
 
@@ -46,6 +43,10 @@ class Json implements iResponse
                 JSON_UNESCAPED_UNICODE |
                 JSON_THROW_ON_ERROR
             ));
+
+            if (session_status() === PHP_SESSION_ACTIVE) {
+                session_write_close();
+            }
 
             exit;
         } catch (JsonException $e) {
