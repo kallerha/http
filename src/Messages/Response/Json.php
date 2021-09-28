@@ -21,7 +21,7 @@ class Json implements iResponse
      */
     public function __construct(
         private array|object $data,
-        private int $responseCode = StatusCodes::OK
+        private int          $responseCode = StatusCodes::OK
     )
     {
     }
@@ -43,10 +43,6 @@ class Json implements iResponse
                 JSON_UNESCAPED_UNICODE |
                 JSON_THROW_ON_ERROR
             ));
-
-            if (session_status() === PHP_SESSION_ACTIVE) {
-                session_write_close();
-            }
 
             exit;
         } catch (JsonException $e) {
