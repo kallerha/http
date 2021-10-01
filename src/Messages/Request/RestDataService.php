@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace FluencePrototype\Http\Messages\Request;
 
-/**
- * Class FormService
- * @package FluencePrototype\Http\Messages\Request
- */
-class FormService implements iInput
+class RestDataService implements iRest
 {
+
+    private $jsonInput;
+
+    public function __construct()
+    {
+        $this->jsonInput = file_get_contents('php://input');
+    }
 
     /**
      * @param string $name
@@ -20,7 +23,7 @@ class FormService implements iInput
     private function getSanitizedInputValue(string $name, int $filter, bool $requireAsArray = false): null|bool|int|string|array
     {
         if ($requireAsArray) {
-            if ($array = filter_input(type: INPUT_POST, var_name: $name, filter: $filter, options: FILTER_REQUIRE_ARRAY)) {
+            if ($array = filter_var($this->jsonInput->{$name}, filter: $filter, options: FILTER_REQUIRE_ARRAY)) {
                 return match ($filter) {
                     FILTER_SANITIZE_STRING => array_map(callback: 'trim', array: $array),
                     FILTER_SANITIZE_NUMBER_INT => array_map(callback: 'intval', array: $array),
@@ -31,7 +34,7 @@ class FormService implements iInput
             return null;
         }
 
-        if ($value = filter_input(type: INPUT_POST, var_name: $name, filter: $filter)) {
+        if ($value = filter_var($this->jsonInput->{$name}, filter: $filter)) {
             return match ($filter) {
                 FILTER_SANITIZE_EMAIL, FILTER_SANITIZE_STRING, FILTER_SANITIZE_URL => trim(string: $value),
                 FILTER_SANITIZE_NUMBER_INT => (int)$value,
@@ -139,5 +142,5 @@ class FormService implements iInput
     {
         return self::getSanitizedInputValue(name: $name, filter: FILTER_VALIDATE_BOOL, requireAsArray: true);
     }
-
+    
 }
