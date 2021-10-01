@@ -8,7 +8,7 @@ namespace FluencePrototype\Http\Messages\Request;
  * Class FormService
  * @package FluencePrototype\Http\Messages\Request
  */
-class FormService implements iInput
+class FormService
 {
 
     /**

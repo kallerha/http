@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace FluencePrototype\Http\Messages\Request;
 
-class RestDataService implements iRest
+class RestDataService
 {
 
-    private $jsonInput;
+    private object $jsonInput;
 
-    public function __construct()
+    public function __construct(null|object $jsonInput = null)
     {
-        $this->jsonInput = file_get_contents('php://input');
+        $this->jsonInput = $jsonInput ?? json_decode(file_get_contents('php://input'));
     }
 
     /**
@@ -22,27 +22,27 @@ class RestDataService implements iRest
      */
     private function getSanitizedInputValue(string $name, int $filter, bool $requireAsArray = false): null|bool|int|string|array
     {
-        if ($requireAsArray) {
-            if ($array = filter_var($this->jsonInput->{$name}, filter: $filter, options: FILTER_REQUIRE_ARRAY)) {
-                return match ($filter) {
-                    FILTER_SANITIZE_STRING => array_map(callback: 'trim', array: $array),
-                    FILTER_SANITIZE_NUMBER_INT => array_map(callback: 'intval', array: $array),
-                    FILTER_VALIDATE_BOOL => array_map(callback: 'boolval', array: $array)
-                };
-            }
-
+        if (!isset($this->jsonInput->{$name})) {
             return null;
         }
 
-        if ($value = filter_var($this->jsonInput->{$name}, filter: $filter)) {
+        if ($requireAsArray) {
+            $array = filter_var($this->jsonInput->{$name}, filter: $filter, options: FILTER_REQUIRE_ARRAY);
+
             return match ($filter) {
-                FILTER_SANITIZE_EMAIL, FILTER_SANITIZE_STRING, FILTER_SANITIZE_URL => trim(string: $value),
-                FILTER_SANITIZE_NUMBER_INT => (int)$value,
-                FILTER_VALIDATE_BOOL => (bool)$value
+                FILTER_SANITIZE_STRING => array_map(callback: 'trim', array: $array),
+                FILTER_SANITIZE_NUMBER_INT => array_map(callback: 'intval', array: $array),
+                FILTER_VALIDATE_BOOL => array_map(callback: 'boolval', array: $array)
             };
         }
 
-        return null;
+        $value = filter_var($this->jsonInput->{$name}, filter: $filter);
+
+        return match ($filter) {
+            FILTER_SANITIZE_EMAIL, FILTER_SANITIZE_STRING, FILTER_SANITIZE_URL => trim(string: $value),
+            FILTER_SANITIZE_NUMBER_INT => (int)$value,
+            FILTER_VALIDATE_BOOL => (bool)$value
+        };
     }
 
     /**
@@ -142,5 +142,18 @@ class RestDataService implements iRest
     {
         return self::getSanitizedInputValue(name: $name, filter: FILTER_VALIDATE_BOOL, requireAsArray: true);
     }
-    
+
+    public function getObject(string $name): ?RestDataService
+    {
+        if (!isset($this->jsonInput->{$name})) {
+            return null;
+        }
+
+        if (!is_object($this->jsonInput->{$name})) {
+            return null;
+        }
+
+        return new RestDataService($this->jsonInput->{$name});
+    }
+
 }
