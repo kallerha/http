@@ -7,7 +7,7 @@ namespace FluencePrototype\Http\Messages\Request;
 class RestDataService
 {
 
-    private object $jsonInput;
+    private null|object $jsonInput;
 
     public function __construct(null|object $jsonInput = null)
     {
