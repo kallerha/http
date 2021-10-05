@@ -58,7 +58,7 @@ class View implements iResponse, iView
             extract(array: $this->data);
             ob_start();
 
-            include $filesystem->getDirectoryPath() . DIRECTORY_SEPARATOR . $subdomain . DIRECTORY_SEPARATOR . $this->template . '.phtml';
+            include $this->template;
             echo PHP_EOL;
 
             $template = ob_get_clean();
