@@ -20,8 +20,8 @@ class Json implements iResponse
      * @param int $responseCode
      */
     public function __construct(
-        private array|object $data,
-        private int          $responseCode = StatusCodes::OK
+        private array|object|string $data,
+        private int                 $responseCode = StatusCodes::OK
     )
     {
     }
