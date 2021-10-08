@@ -25,14 +25,14 @@ class HttpUrl implements iUrl, Stringable
      * @param string|null $fragment
      */
     public function __construct(
-        private string $protocol,
-        private string $host,
-        private int $port = 80,
-        private ?string $username = null,
-        private ?string $password = null,
-        private ?string $query = null,
-        private ?string $path = null,
-        private ?string $fragment = null
+        private string      $protocol,
+        private string      $host,
+        private int         $port = 80,
+        private null|string $username = null,
+        private null|string $password = null,
+        private null|string $query = null,
+        private null|string $path = null,
+        private null|string $fragment = null
     )
     {
     }
@@ -88,7 +88,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @inheritDoc
      */
-    public function getUsername(): ?string
+    public function getUsername(): null|string
     {
         return $this->username;
     }
@@ -96,7 +96,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @param string|null $username
      */
-    public function setUsername(?string $username): void
+    public function setUsername(null|string $username): void
     {
         $this->username = $username;
     }
@@ -104,7 +104,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @inheritDoc
      */
-    public function getPassword(): ?string
+    public function getPassword(): null|string
     {
         return $this->password;
     }
@@ -112,7 +112,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @param string|null $password
      */
-    public function setPassword(?string $password): void
+    public function setPassword(null|string $password): void
     {
         $this->password = $password;
     }
@@ -120,7 +120,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @inheritDoc
      */
-    public function getPath(): ?string
+    public function getPath(): null|string
     {
         return $this->path;
     }
@@ -128,7 +128,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @param string|null $path
      */
-    public function setPath(?string $path): void
+    public function setPath(null|string $path): void
     {
         $this->path = $path;
     }
@@ -136,7 +136,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @inheritDoc
      */
-    public function getQuery(): ?string
+    public function getQuery(): null|string
     {
         return $this->query;
     }
@@ -144,7 +144,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @param string|null $query
      */
-    public function setQuery(?string $query): void
+    public function setQuery(null|string $query): void
     {
         $this->query = $query;
     }
@@ -166,7 +166,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @inheritDoc
      */
-    public function getFragment(): ?string
+    public function getFragment(): null|string
     {
         return $this->fragment;
     }
@@ -174,7 +174,7 @@ class HttpUrl implements iUrl, Stringable
     /**
      * @param string|null $fragment
      */
-    public function setFragment(?string $fragment): void
+    public function setFragment(null|string $fragment): void
     {
         $this->fragment = $fragment;
     }
@@ -183,7 +183,7 @@ class HttpUrl implements iUrl, Stringable
      * @param string $url
      * @return iUrl|null
      */
-    public static function createFromUrl(string $url): ?iUrl
+    public static function createFromUrl(string $url): null|iUrl
     {
         if (!filter_var(value: $url, filter: FILTER_VALIDATE_URL)) {
             return null;
@@ -215,7 +215,7 @@ class HttpUrl implements iUrl, Stringable
         $requestUri = filter_input(type: INPUT_SERVER, var_name: 'REQUEST_URI', filter: FILTER_SANITIZE_STRING);
         $url = $protocol . $httpHost . $requestUri;
 
-        return self::createFromUrl(url: $url);
+        return HttpUrl::createFromUrl(url: $url);
     }
 
     /**

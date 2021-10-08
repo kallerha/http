@@ -16,7 +16,7 @@ class Json implements iResponse
 
     /**
      * View constructor.
-     * @param array|object $data
+     * @param array|object|string $data
      * @param int $responseCode
      */
     public function __construct(
@@ -45,7 +45,7 @@ class Json implements iResponse
             ));
 
             exit;
-        } catch (JsonException $e) {
+        } catch (JsonException) {
         }
     }
 

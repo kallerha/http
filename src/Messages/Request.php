@@ -61,7 +61,7 @@ class Request implements iRequest
     /**
      * @inheritDoc
      */
-    public function getIp(): ?string
+    public function getIp(): null|string
     {
         if ($ip = filter_input(INPUT_SERVER, 'HTTP_CF_CONNECTING_IP', FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return $ip;

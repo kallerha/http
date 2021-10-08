@@ -29,22 +29,22 @@ interface iUrl
     /**
      * @return string|null
      */
-    public function getUsername(): ?string;
+    public function getUsername(): null|string;
 
     /**
      * @return string|null
      */
-    public function getPassword(): ?string;
+    public function getPassword(): null|string;
 
     /**
      * @return string|null
      */
-    public function getPath(): ?string;
+    public function getPath(): null|string;
 
     /**
      * @return string|null
      */
-    public function getQuery(): ?string;
+    public function getQuery(): null|string;
 
     /**
      * @return array
@@ -54,6 +54,6 @@ interface iUrl
     /**
      * @return string|null
      */
-    public function getFragment(): ?string;
+    public function getFragment(): null|string;
 
 }

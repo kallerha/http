@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FluencePrototype\Http\Messages\Response;
 
 use FluencePrototype\Http\Messages\iResponse;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Class Status
@@ -27,7 +28,7 @@ class Status implements iResponse
     /**
      * @inheritDoc
      */
-    public function render(): void
+    #[NoReturn] public function render(): void
     {
         http_response_code($this->statusCode);
 

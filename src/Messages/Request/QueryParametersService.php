@@ -11,7 +11,7 @@ namespace FluencePrototype\Http\Messages\Request;
 class QueryParametersService
 {
 
-    private array $queryParameters = [];
+    private array $queryParameters;
 
     /**
      * QueryParametersService constructor.

@@ -49,7 +49,7 @@ class RestDataService
      * @param string $name
      * @return string|null
      */
-    public function getName(string $name): ?string
+    public function getName(string $name): null|string
     {
         if ($string = $this->getString($name)) {
             return preg_replace('/\s+/', ' ', $string);
@@ -62,7 +62,7 @@ class RestDataService
      * @param string $name
      * @return string|null
      */
-    public function getRaw(string $name): ?string
+    public function getRaw(string $name): null|string
     {
         if ($raw = $this->jsonInput->{$name}) {
             return $raw;
@@ -75,54 +75,54 @@ class RestDataService
      * @param string $name
      * @return string|null
      */
-    public function getEmail(string $name): ?string
+    public function getEmail(string $name): null|string
     {
-        return self::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_EMAIL);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_EMAIL);
     }
 
     /**
      * @param string $name
      * @return string|null
      */
-    public function getUrl(string $name): ?string
+    public function getUrl(string $name): null|string
     {
-        return self::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_URL);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_URL);
     }
 
     /**
      * @param string $name
      * @return string|null
      */
-    public function getString(string $name): ?string
+    public function getString(string $name): null|string
     {
-        return self::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_STRING);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_STRING);
     }
 
     /**
      * @param string $name
      * @return array|null
      */
-    public function getStringArray(string $name): ?array
+    public function getStringArray(string $name): null|array
     {
-        return self::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_STRING, requireAsArray: true);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_STRING, requireAsArray: true);
     }
 
     /**
      * @param string $name
      * @return int|null
      */
-    public function getInteger(string $name): ?int
+    public function getInteger(string $name): null|int
     {
-        return self::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_INT);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_INT);
     }
 
     /**
      * @param string $name
      * @return array|null
      */
-    public function getIntegerArray(string $name): ?array
+    public function getIntegerArray(string $name): null|array
     {
-        return self::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_INT, requireAsArray: true);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_INT, requireAsArray: true);
     }
 
     /**
@@ -131,19 +131,19 @@ class RestDataService
      */
     public function getBoolean(string $name): bool
     {
-        return (bool)self::getSanitizedInputValue(name: $name, filter: FILTER_VALIDATE_BOOL);
+        return (bool)RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_VALIDATE_BOOL);
     }
 
     /**
      * @param string $name
      * @return array|null
      */
-    public function getBooleanArray(string $name): ?array
+    public function getBooleanArray(string $name): null|array
     {
-        return self::getSanitizedInputValue(name: $name, filter: FILTER_VALIDATE_BOOL, requireAsArray: true);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_VALIDATE_BOOL, requireAsArray: true);
     }
 
-    public function getObject(string $name): ?RestDataService
+    public function getObject(string $name): null|RestDataService
     {
         if (!isset($this->jsonInput->{$name})) {
             return null;

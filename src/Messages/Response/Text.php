@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FluencePrototype\Http\Messages\Response;
 
 use FluencePrototype\Http\Messages\iResponse;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Class EmptyResponse
@@ -26,7 +27,7 @@ class Text implements iResponse
     /**
      * @inheritDoc
      */
-    public function render(): void
+    #[NoReturn] public function render(): void
     {
         echo $this->text . PHP_EOL;
         exit;

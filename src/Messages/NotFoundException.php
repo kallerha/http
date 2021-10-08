@@ -6,6 +6,7 @@ namespace FluencePrototype\Http\Messages;
 
 use Exception;
 use FluencePrototype\Http\Messages\Response\StatusCodes;
+use JetBrains\PhpStorm\Pure;
 use Throwable;
 
 /**
@@ -20,7 +21,7 @@ class NotFoundException extends Exception
      * @param string $message
      * @param Throwable|null $previous
      */
-    public function __construct(string $message = '', Throwable $previous = null)
+    #[Pure] public function __construct(string $message = '', Throwable $previous = null)
     {
         parent::__construct($message, StatusCodes::NOT_FOUND, $previous);
     }

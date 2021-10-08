@@ -40,7 +40,7 @@ class PathService
      * @param array $parameters
      * @return string|null
      */
-    public function getPathByName(string $name, array $parameters = []): ?string
+    public function getPathByName(string $name, array $parameters = []): null|string
     {
         $routeNamesCache = $this->getRouteNamesCache();
 
