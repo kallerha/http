@@ -34,7 +34,7 @@ interface iRequest
     /**
      * @return string|null
      */
-    public function getIp(): ?string;
+    public function getIp(): null|string;
 
     /**
      * @return string
