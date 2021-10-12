@@ -16,7 +16,7 @@ class Json implements iResponse
 
     /**
      * View constructor.
-     * @param array|int|object|string $data
+     * @param array|bool|float|int|object|string $data
      * @param int $responseCode
      */
     public function __construct(
@@ -32,7 +32,7 @@ class Json implements iResponse
     public function render(): void
     {
         try {
-            header('Content-Type: application/json; charset=utf-8');
+            header(header: 'Content-Type: application/json; charset=utf-8');
             http_response_code(response_code: $this->responseCode);
 
             echo str_replace('\t', ' ', json_encode($this->data,
