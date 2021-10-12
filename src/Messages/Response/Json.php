@@ -16,12 +16,12 @@ class Json implements iResponse
 
     /**
      * View constructor.
-     * @param array|object|string $data
+     * @param array|int|object|string $data
      * @param int $responseCode
      */
     public function __construct(
-        private array|object|string $data,
-        private int                 $responseCode = StatusCodes::OK
+        private array|bool|float|int|object|string $data,
+        private int                                $responseCode = StatusCodes::OK
     )
     {
     }
