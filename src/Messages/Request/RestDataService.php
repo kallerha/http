@@ -64,8 +64,8 @@ class RestDataService
      */
     public function getRaw(string $name): null|string
     {
-        if ($raw = $this->jsonInput->{$name}) {
-            return $raw;
+        if (isset($this->jsonInput->{$name})) {
+            return $this->jsonInput->{$name};
         }
 
         return null;
