@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FluencePrototype\Http;
 
+use FluencePrototype\Auth\AuthenticationService;
 use FluencePrototype\Cache\Cache;
 use FluencePrototype\Filesystem\Filesystem;
 
@@ -85,6 +86,32 @@ class PathService
 
         if ($path = $this->getPathByName($name, $parameters)) {
             return $path === $currentUrl;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $name
+     * @param array $roles
+     * @return bool
+     */
+    public function isAuthorizedForPath(string $name): bool
+    {
+        $authenticationService = new AuthenticationService();
+        $userRole = $authenticationService->getUserRole();
+        $routeNamesCache = $this->getRouteNamesCache();
+
+        if (isset($routeNamesCache[$name])) {
+            $roles = $routeNamesCache[$name]['roles'];
+
+            if (empty($roles)) {
+                return true;
+            }
+
+            if (in_array(needle: $userRole, haystack: $roles, strict: true)) {
+                return true;
+            }
         }
 
         return false;
