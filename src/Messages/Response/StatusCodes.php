@@ -12,6 +12,7 @@ class StatusCodes
 {
 
     public const OK = 200;
+    public const MOVED_PERMANENTLY = 301;
     public const FOUND = 302;
     public const SEE_OTHER = 303;
     public const BAD_REQUEST = 400;
@@ -19,5 +20,6 @@ class StatusCodes
     public const FORBIDDEN = 403;
     public const NOT_FOUND = 404;
     public const METHOD_NOT_ALLOWED = 405;
+    public const INTERNAL_SERVER_ERROR = 500;
 
 }
