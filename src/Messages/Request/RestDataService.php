@@ -20,7 +20,7 @@ class RestDataService
      * @param bool $requireAsArray
      * @return bool|int|string|array|null
      */
-    private function getSanitizedInputValue(string $name, int $filter, bool $requireAsArray = false): null|bool|int|string|array
+    private function getSanitizedInputValue(string $name, int $filter, bool $requireAsArray = false): null|bool|int|float|string|array
     {
         if (!isset($this->jsonInput->{$name})) {
             return null;
