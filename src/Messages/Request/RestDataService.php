@@ -41,6 +41,7 @@ class RestDataService
         return match ($filter) {
             FILTER_SANITIZE_EMAIL, FILTER_SANITIZE_STRING, FILTER_SANITIZE_URL => trim(string: $value),
             FILTER_SANITIZE_NUMBER_INT => (int)$value,
+            FILTER_SANITIZE_NUMBER_FLOAT => (float)$value,
             FILTER_VALIDATE_BOOL => (bool)$value
         };
     }
@@ -114,6 +115,15 @@ class RestDataService
     public function getInteger(string $name): null|int
     {
         return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_INT);
+    }
+
+    /**
+     * @param string $name
+     * @return float|null
+     */
+    public function getFloat(string $name): null|float
+    {
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_FLOAT);
     }
 
     /**
