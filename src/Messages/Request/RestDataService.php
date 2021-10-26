@@ -36,7 +36,11 @@ class RestDataService
             };
         }
 
-        $value = filter_var($this->jsonInput->{$name}, filter: $filter);
+        if ($filter === FILTER_SANITIZE_NUMBER_FLOAT) {
+            $value = filter_var($this->jsonInput->{$name}, filter: $filter, options: FILTER_FLAG_ALLOW_FRACTION);
+        } else {
+            $value = filter_var($this->jsonInput->{$name}, filter: $filter);
+        }
 
         return match ($filter) {
             FILTER_SANITIZE_EMAIL, FILTER_SANITIZE_STRING, FILTER_SANITIZE_URL => trim(string: $value),
