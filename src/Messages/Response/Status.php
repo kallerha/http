@@ -19,7 +19,7 @@ class Status implements iResponse
      * @param int $statusCode
      */
     public function __construct(
-        private int $statusCode
+        private int $statusCode = StatusCodes::OK
     )
     {
 
