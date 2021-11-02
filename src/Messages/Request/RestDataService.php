@@ -129,7 +129,7 @@ class RestDataService
     {
         return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_INT, requireAsArray: true);
     }
-    
+
     /**
      * @param string $name
      * @return float|null
