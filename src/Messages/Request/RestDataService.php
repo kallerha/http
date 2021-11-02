@@ -123,20 +123,20 @@ class RestDataService
 
     /**
      * @param string $name
-     * @return float|null
-     */
-    public function getFloat(string $name): null|float
-    {
-        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_FLOAT);
-    }
-
-    /**
-     * @param string $name
      * @return array|null
      */
     public function getIntegerArray(string $name): null|array
     {
         return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_INT, requireAsArray: true);
+    }
+    
+    /**
+     * @param string $name
+     * @return float|null
+     */
+    public function getFloat(string $name): null|float
+    {
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_NUMBER_FLOAT);
     }
 
     /**
@@ -157,6 +157,10 @@ class RestDataService
         return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_VALIDATE_BOOL, requireAsArray: true);
     }
 
+    /**
+     * @param string $name
+     * @return RestDataService|null
+     */
     public function getObject(string $name): null|RestDataService
     {
         if (!isset($this->jsonInput->{$name})) {
@@ -168,6 +172,30 @@ class RestDataService
         }
 
         return new RestDataService($this->jsonInput->{$name});
+    }
+
+
+    /**
+     * @param string $name
+     * @return array|null
+     */
+    public function getObjectArray(string $name): null|array
+    {
+        if (!isset($this->jsonInput->{$name})) {
+            return null;
+        }
+
+        if (!is_array($this->jsonInput->{$name})) {
+            return null;
+        }
+
+        return array_filter(array_map(function ($object) {
+            if (!is_object($object)) {
+                return null;
+            }
+
+            return new RestDataService($object);
+        }, $this->jsonInput->{$name}));
     }
 
 }
