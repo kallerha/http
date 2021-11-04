@@ -177,7 +177,7 @@ class RestDataService
 
     /**
      * @param string $name
-     * @return array|null
+     * @return array<RestDataService>|null
      */
     public function getObjectArray(string $name): null|array
     {
