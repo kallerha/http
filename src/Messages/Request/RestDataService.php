@@ -198,4 +198,9 @@ class RestDataService
         }, $this->jsonInput->{$name}));
     }
 
+    public static function createFromEncodedJson(string $jsonString): RestDataService
+    {
+        return new RestDataService(json_decode($jsonString));
+    }
+
 }
