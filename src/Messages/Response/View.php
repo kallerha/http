@@ -29,7 +29,7 @@ class View implements iResponse, iView
         private object $controller,
         private string $layout,
         private string $template,
-        private int $responseCode = StatusCodes::OK
+        private int    $responseCode = StatusCodes::OK
     )
     {
     }
@@ -37,7 +37,7 @@ class View implements iResponse, iView
     /**
      * @inheritDoc
      */
-    public function addData(string $key, array|bool|float|int|object|string $value): iView
+    public function addData(string $key, array|bool|float|int|object|string|null $value): iView
     {
         $this->data[$key] = $value;
 
@@ -67,7 +67,7 @@ class View implements iResponse, iView
 
             include $filesystem->getDirectoryPath() . DIRECTORY_SEPARATOR . $this->layout . '.phtml';
             exit;
-        } catch (DirectoryNotFoundException | InvalidDirectoryPathException $e) {
+        } catch (DirectoryNotFoundException|InvalidDirectoryPathException $e) {
         }
     }
 
