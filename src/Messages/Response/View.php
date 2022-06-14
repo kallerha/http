@@ -8,6 +8,7 @@ use FluencePrototype\Filesystem\DirectoryNotFoundException;
 use FluencePrototype\Filesystem\Filesystem;
 use FluencePrototype\Filesystem\InvalidDirectoryPathException;
 use FluencePrototype\Http\Messages\iResponse;
+use FluencePrototype\Http\ViewData;
 
 /**
  * Class View
@@ -54,8 +55,8 @@ class View implements iResponse, iView
             $controllerNameArray = explode('\\', get_class($controller));
             $subdomain = $controllerNameArray[2];
             $filesystem = (new Filesystem())->cd('src/App/Views');
+            $viewData = new ViewData($this->data);
 
-            extract(array: $this->data);
             ob_start();
 
             include $this->template;
