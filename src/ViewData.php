@@ -13,7 +13,7 @@ class ViewData
     {
     }
 
-    public function getData(string $name): mixed
+    public function __get(string $name): mixed
     {
         if (isset($this->data[$name])) {
             return $this->data[$name];
