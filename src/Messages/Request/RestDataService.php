@@ -30,7 +30,7 @@ class RestDataService
             $array = filter_var($this->jsonInput->{$name}, filter: $filter, options: FILTER_REQUIRE_ARRAY);
 
             return match ($filter) {
-                FILTER_SANITIZE_STRING => array_map(callback: 'trim', array: $array),
+                FILTER_UNSAFE_RAW => array_map(callback: 'trim', array: $array),
                 FILTER_SANITIZE_NUMBER_INT => array_map(callback: 'intval', array: $array),
                 FILTER_VALIDATE_BOOL => array_map(callback: 'boolval', array: $array)
             };
@@ -43,7 +43,7 @@ class RestDataService
         }
 
         return match ($filter) {
-            FILTER_SANITIZE_EMAIL, FILTER_SANITIZE_STRING, FILTER_SANITIZE_URL => trim(string: $value),
+            FILTER_SANITIZE_EMAIL, FILTER_UNSAFE_RAW, FILTER_SANITIZE_URL => trim(string: $value),
             FILTER_SANITIZE_NUMBER_INT => (int)$value,
             FILTER_SANITIZE_NUMBER_FLOAT => (float)$value,
             FILTER_VALIDATE_BOOL => (bool)$value
@@ -100,7 +100,7 @@ class RestDataService
      */
     public function getString(string $name): null|string
     {
-        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_STRING);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_UNSAFE_RAW);
     }
 
     /**
@@ -109,7 +109,7 @@ class RestDataService
      */
     public function getStringArray(string $name): null|array
     {
-        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_STRING, requireAsArray: true);
+        return RestDataService::getSanitizedInputValue(name: $name, filter: FILTER_UNSAFE_RAW, requireAsArray: true);
     }
 
     /**

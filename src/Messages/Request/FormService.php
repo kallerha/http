@@ -22,7 +22,7 @@ class FormService
         if ($requireAsArray) {
             if ($array = filter_input(type: INPUT_POST, var_name: $name, filter: $filter, options: FILTER_REQUIRE_ARRAY)) {
                 return match ($filter) {
-                    FILTER_SANITIZE_STRING => array_map(callback: 'trim', array: $array),
+                    FILTER_UNSAFE_RAW => array_map(callback: 'trim', array: $array),
                     FILTER_SANITIZE_NUMBER_INT => array_map(callback: 'intval', array: $array),
                     FILTER_VALIDATE_BOOL => array_map(callback: 'boolval', array: $array)
                 };
@@ -33,7 +33,7 @@ class FormService
 
         if ($value = filter_input(type: INPUT_POST, var_name: $name, filter: $filter)) {
             return match ($filter) {
-                FILTER_SANITIZE_EMAIL, FILTER_SANITIZE_STRING, FILTER_SANITIZE_URL => trim(string: $value),
+                FILTER_SANITIZE_EMAIL, FILTER_UNSAFE_RAW, FILTER_SANITIZE_URL => trim(string: $value),
                 FILTER_SANITIZE_NUMBER_INT => (int)$value,
                 FILTER_VALIDATE_BOOL => (bool)$value
             };
@@ -92,7 +92,7 @@ class FormService
      */
     public function getString(string $name): null|string
     {
-        return FormService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_STRING);
+        return FormService::getSanitizedInputValue(name: $name, filter: FILTER_UNSAFE_RAW);
     }
 
     /**
@@ -101,7 +101,7 @@ class FormService
      */
     public function getStringArray(string $name): null|array
     {
-        return FormService::getSanitizedInputValue(name: $name, filter: FILTER_SANITIZE_STRING, requireAsArray: true);
+        return FormService::getSanitizedInputValue(name: $name, filter: FILTER_UNSAFE_RAW, requireAsArray: true);
     }
 
     /**

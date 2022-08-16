@@ -55,7 +55,7 @@ class Request implements iRequest
      */
     public function getMethod(): string
     {
-        return strtolower(string: filter_input(type: INPUT_SERVER, var_name: 'REQUEST_METHOD', filter: FILTER_SANITIZE_STRING));
+        return strtolower(string: filter_input(type: INPUT_SERVER, var_name: 'REQUEST_METHOD', filter: FILTER_UNSAFE_RAW));
     }
 
     /**
@@ -107,7 +107,7 @@ class Request implements iRequest
      */
     public function getUserAgent(): string
     {
-        return trim(filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE));
+        return trim(filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW, FILTER_NULL_ON_FAILURE));
     }
 
 }

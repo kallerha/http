@@ -211,8 +211,8 @@ class HttpUrl implements iUrl, Stringable
         $protocol = filter_input(type: INPUT_SERVER, var_name: 'HTTPS', filter: FILTER_VALIDATE_BOOLEAN, options: FILTER_NULL_ON_FAILURE)
         || filter_input(type: INPUT_SERVER, var_name: 'SERVER_PORT', filter: FILTER_VALIDATE_INT) === 443 ? 'https://' : 'http://';
 
-        $httpHost = filter_input(type: INPUT_SERVER, var_name: 'HTTP_HOST', filter: FILTER_SANITIZE_STRING);
-        $requestUri = filter_input(type: INPUT_SERVER, var_name: 'REQUEST_URI', filter: FILTER_SANITIZE_STRING);
+        $httpHost = filter_input(type: INPUT_SERVER, var_name: 'HTTP_HOST', filter: FILTER_UNSAFE_RAW);
+        $requestUri = filter_input(type: INPUT_SERVER, var_name: 'REQUEST_URI', filter: FILTER_UNSAFE_RAW);
         $url = $protocol . $httpHost . $requestUri;
 
         return HttpUrl::createFromUrl(url: $url);
