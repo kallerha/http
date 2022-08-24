@@ -208,7 +208,16 @@ class HttpUrl implements iUrl, Stringable
      */
     public static function createFromCurrentUrl(): iUrl
     {
-        $protocol = $_SERVER['HTTPS'] === 'on' || $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+        if (isset($_ENV['SCHEME'])) {
+            $protocol = $_ENV['SCHEME'] . '://';
+        } else if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+            $protocol = 'https://';
+        } else if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) {
+            $protocol = 'https://';
+        } else {
+            $protocol = 'http://';
+        }
+
         $httpHost = filter_input(type: INPUT_SERVER, var_name: 'HTTP_HOST', filter: FILTER_UNSAFE_RAW);
         $requestUri = filter_input(type: INPUT_SERVER, var_name: 'REQUEST_URI', filter: FILTER_UNSAFE_RAW);
         $url = $protocol . $httpHost . $requestUri;
