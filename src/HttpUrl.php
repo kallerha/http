@@ -218,8 +218,8 @@ class HttpUrl implements iUrl, Stringable
             $protocol = 'http://';
         }
 
-        $httpHost = filter_input(type: INPUT_SERVER, var_name: 'HTTP_HOST', filter: FILTER_UNSAFE_RAW);
-        $requestUri = filter_input(type: INPUT_SERVER, var_name: 'REQUEST_URI', filter: FILTER_UNSAFE_RAW);
+        $httpHost = filter_var($_SERVER['HTTP_HOST'], FILTER_UNSAFE_RAW);
+        $requestUri = filter_var($_SERVER['REQUEST_URI'], filter: FILTER_UNSAFE_RAW);
         $url = $protocol . $httpHost . $requestUri;
 
         return HttpUrl::createFromUrl(url: $url);
