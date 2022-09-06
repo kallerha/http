@@ -6,6 +6,7 @@ namespace FluencePrototype\Http\Messages;
 
 use FluencePrototype\Http\HttpUrl;
 use FluencePrototype\Http\iUrl;
+use FluencePrototype\Http\Messages\Request\RequestDataService;
 
 /**
  * Class Request
@@ -63,39 +64,41 @@ class Request implements iRequest
      */
     public function getIp(): null|string
     {
-        if ($ip = filter_var($_SERVER['HTTP_CF_CONNECTING_IP'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        $requestDataService = new RequestDataService();
+
+        if ($ip = filter_var($requestDataService->getRaw('HTTP_CF_CONNECTING_IP'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return $ip;
         }
 
-        if ($ip = filter_var($_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
+        if ($ip = filter_var($requestDataService->getRaw('HTTP_CLIENT_IP'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
             return $ip;
         }
 
-        if ($ip = filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($ip = filter_var($requestDataService->getRaw('HTTP_X_FORWARDED_FOR'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return $ip;
         }
 
-        if ($ip = filter_var($_SERVER['HTTP_X_FORWARDED'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($ip = filter_var($requestDataService->getRaw('HTTP_X_FORWARDED'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return $ip;
         }
 
-        if ($ip = filter_var($_SERVER['HTTP_FORWARDED_FOR'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($ip = filter_var($requestDataService->getRaw('HTTP_FORWARDED_FOR'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return $ip;
         }
 
-        if ($ip = filter_var($_SERVER['HTTP_FORWARDED'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($ip = filter_var($requestDataService->getRaw('HTTP_FORWARDED'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return $ip;
         }
 
-        if ($ip = filter_var($_SERVER['HTTP_X_CLUSTER_CLIENT_IP'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($ip = filter_var($requestDataService->getRaw('HTTP_X_CLUSTER_CLIENT_IP'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return $ip;
         }
 
-        if ($ip = filter_var($_SERVER['HTTP_X_REAL_IP'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
+        if ($ip = filter_var($requestDataService->getRaw('HTTP_X_REAL_IP'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
             return $ip;
         }
 
-        if ($ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
+        if ($ip = filter_var($requestDataService->getRaw('REMOTE_ADDR'), FILTER_VALIDATE_IP, FILTER_NULL_ON_FAILURE)) {
             return $ip;
         }
 
