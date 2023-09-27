@@ -9,6 +9,7 @@ use FluencePrototype\Filesystem\Filesystem;
 use FluencePrototype\Filesystem\InvalidDirectoryPathException;
 use FluencePrototype\Http\Messages\iResponse;
 use FluencePrototype\Http\ViewData;
+use FluencePrototype\Http\ViewListenerInterface;
 
 /**
  * Class View
@@ -18,6 +19,9 @@ class View implements iResponse, iView
 {
 
     private array $data = [];
+
+    /** @var ViewListenerInterface[] */
+    private static array $viewListeners = [];
 
     /**
      * View constructor.
@@ -33,6 +37,11 @@ class View implements iResponse, iView
         private int    $responseCode = StatusCodes::OK
     )
     {
+    }
+
+    public static function addViewListener(ViewListenerInterface $viewListener): void
+    {
+        View::$viewListeners[] = $viewListener;
     }
 
     /**
@@ -56,6 +65,10 @@ class View implements iResponse, iView
             $subdomain = $controllerNameArray[2];
             $filesystem = (new Filesystem())->cd('src/App/Views');
             $viewData = new ViewData($this->data);
+
+            foreach (View::$viewListeners as $viewListener) {
+                $viewListener->listen($viewData);
+            }
 
             ob_start();
 
