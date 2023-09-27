@@ -13,6 +13,11 @@ class ViewData
     {
     }
 
+    public function __set(string $name, mixed $value): void
+    {
+        $this->data[$name] = $value;
+    }
+
     public function __get(string $name): mixed
     {
         if (isset($this->data[$name])) {
